@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   gifWrapper: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: spacing.xl,
   },
   gif: {
-    width: 280,
-    height: 280,
+    width: 180,
+    height: 180,
   },
   loadingText: {
     fontSize: typography.fontSize.sm,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,19 +6,19 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-} from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import { useOnboardingStore } from '../../store';
-import { SafeAreaView } from 'react-native-safe-area-context';
+} from "react-native";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import { useOnboardingStore } from "../../store";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { colors, typography, spacing } from '../../theme';
-import { Button, Input, StepIndicator } from '../../components/ui';
-import { OnboardingStackParamList } from '../../types/navigation';
+import { colors, typography, spacing } from "../../theme";
+import { Button, Input, StepIndicator } from "../../components/ui";
+import { OnboardingStackParamList } from "../../types/navigation";
 
 // --- Validation Schema ---
 const schema = z.object({
@@ -28,9 +28,9 @@ const schema = z.object({
     .refine(
       (val) =>
         !val ||
-        val === '' ||
+        val === "" ||
         /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/.test(val),
-      { message: 'Please enter a valid LinkedIn profile URL' }
+      { message: "Please enter a valid LinkedIn profile URL" },
     ),
 });
 
@@ -39,14 +39,15 @@ type FormData = z.infer<typeof schema>;
 // --- Navigation Type ---
 type NavigationProp = NativeStackNavigationProp<
   OnboardingStackParamList,
-  'StepTwo'
+  "StepTwo"
 >;
 
 // --- Component ---
 export default function StepTwoScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [connectingLinkedIn, setConnectingLinkedIn] = useState(false);
-  const { setLinkedinUrl, setLinkedinConnected, setCurrentStep } = useOnboardingStore();
+  const { setLinkedinUrl, setLinkedinConnected, setCurrentStep } =
+    useOnboardingStore();
 
   const {
     control,
@@ -54,7 +55,7 @@ export default function StepTwoScreen() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { linkedinUrl: '' },
+    defaultValues: { linkedinUrl: "" },
   });
 
   const handleLinkedInConnect = async () => {
@@ -63,7 +64,7 @@ export default function StepTwoScreen() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setLinkedinConnected(true);
       setCurrentStep(3);
-      navigation.navigate('Progress');
+      navigation.navigate("Progress");
     } finally {
       setConnectingLinkedIn(false);
     }
@@ -74,14 +75,14 @@ export default function StepTwoScreen() {
       setLinkedinUrl(data.linkedinUrl);
     }
     setCurrentStep(3);
-    navigation.navigate('Progress');
+    navigation.navigate("Progress");
   };
 
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
           contentContainerStyle={styles.scroll}
@@ -93,16 +94,23 @@ export default function StepTwoScreen() {
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>Speed up your application</Text>
-          </View>
-
-          {/* Info Banner */}
-          <View style={styles.infoBanner}>
-            <Ionicons name="information-circle" size={18} color={colors.primary} />
-            <Text style={styles.infoText}>
-              Connecting LinkedIn auto-fills your profile data, saving you time. We only access your public information.
+            <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+              Speed up your application
             </Text>
           </View>
+
+        {/* Info Banner */}
+<View style={styles.infoBanner}>
+  <Ionicons
+    name="information-circle"
+    size={20}
+    color={colors.primary}
+    style={styles.infoIcon}
+  />
+  <Text style={styles.infoText}>
+    Connecting LinkedIn auto-fills your profile data, saving you time. We only access your public information.
+  </Text>
+</View>
 
           {/* LinkedIn Connect Button */}
           <Button
@@ -112,7 +120,9 @@ export default function StepTwoScreen() {
             variant="outline"
             style={[styles.linkedinButton, styles.linkedinButtonOutline]}
             labelStyle={styles.linkedinButtonLabel}
-            leftIcon={<Ionicons name="logo-linkedin" size={20} color="#0A66C2" />}
+            leftIcon={
+              <Ionicons name="logo-linkedin" size={20} color="#0A66C2" />
+            }
           />
 
           {/* Divider */}
@@ -137,7 +147,11 @@ export default function StepTwoScreen() {
                 autoCorrect={false}
                 keyboardType="url"
                 leftIcon={
-                  <Ionicons name="person-outline" size={18} color={colors.grey500} />
+                  <Ionicons
+                    name="person-outline"
+                    size={18}
+                    color={colors.grey500}
+                  />
                 }
               />
             )}
@@ -155,7 +169,8 @@ export default function StepTwoScreen() {
 
           {/* Legal Note */}
           <Text style={styles.legalText}>
-            We work directly with LinkedIn best practices. Your account will not be restricted because of us.
+             {"We work directly with LinkedIn best practices. Your account will\nnot be restricted because of us."}
+
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -188,37 +203,42 @@ const styles = StyleSheet.create({
     lineHeight: typography.fontSize.xxxl * 1.3,
   },
   infoBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.primaryLight,
-    borderRadius: 12,
-    padding: spacing.lg,
-    marginBottom: spacing.xl,
-    gap: spacing.sm,
-  },
-  infoText: {
-    flex: 1,
-    fontSize: typography.fontSize.sm,
-    color: colors.primary,
-    lineHeight: typography.fontSize.sm * 1.6,
-    fontWeight: typography.fontWeight.medium,
-  },
+  flexDirection: 'row',
+  alignItems: 'flex-start',       // icon aligns to top
+  backgroundColor: colors.primaryLight,
+  borderRadius: 12,
+  borderWidth: 1,
+  borderColor: colors.primary,    // adds the blue border
+  padding: spacing.lg,
+  marginBottom: spacing.xl,
+  gap: spacing.sm,
+},
+infoIcon: {
+  marginTop: 1,                   // slight nudge to align with first text line
+},
+infoText: {
+  flex: 1,
+  fontSize: typography.fontSize.sm,
+  color: colors.primary,
+  lineHeight: typography.fontSize.sm * 1.6,
+  fontWeight: typography.fontWeight.medium,
+},
   linkedinButton: {
-    width: '100%',
+    width: "100%",
     marginBottom: spacing.xl,
   },
   linkedinButtonOutline: {
-    borderColor: '#0A66C2',
+    borderColor: "#0A66C2",
   },
   linkedinButtonLabel: {
-    color: '#0A66C2',
+    color: "#0A66C2",
   },
   continueButton: {
-    backgroundColor: '#0A66C2',
+    backgroundColor: "#0A66C2",
   },
   divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: spacing.xl,
     gap: spacing.sm,
   },
@@ -237,13 +257,13 @@ const styles = StyleSheet.create({
     minHeight: spacing.xxxl,
   },
   button: {
-    width: '100%',
+    width: "100%",
     marginBottom: spacing.lg,
   },
   legalText: {
     fontSize: typography.fontSize.xs,
     color: colors.textSecondary,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: typography.fontSize.xs * 1.8,
   },
 });

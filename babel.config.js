@@ -2,8 +2,8 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    plugins: [
-      'react-native-reanimated/plugin', // ← THIS WAS MISSING
-    ],
+    // NOTE: Do NOT add 'react-native-reanimated/plugin' here.
+    // This project uses react-native-reanimated v4 which does NOT use a Babel plugin.
+    // Adding that plugin causes Hermes "non-terminated string" compile errors.
   };
 };

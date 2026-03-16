@@ -100,7 +100,7 @@ export default function StepOneScreen() {
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  leftIcon={<Ionicons name="mail-outline" size={18} color={colors.grey500} />}
+                  leftIcon={<Ionicons name="mail" size={18} color={colors.grey500} />}
                 />
               )}
             />
