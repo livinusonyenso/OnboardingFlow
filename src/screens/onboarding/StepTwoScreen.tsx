@@ -93,7 +93,7 @@ export default function StepTwoScreen() {
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Speed up your application</Text>
+            <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>Speed up your application</Text>
           </View>
 
           {/* Info Banner */}
@@ -155,7 +155,7 @@ export default function StepTwoScreen() {
 
           {/* Legal Note */}
           <Text style={styles.legalText}>
-            We work directly with LinkedIn best practices. Your account will not
+            We work directly with LinkedIn best practices. Your account {"\n"} will not
             be restricted because of us.
           </Text>
         </ScrollView>

@@ -1,10 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Animated,
-} from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
+import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useOnboardingStore } from '../../store';
 
@@ -15,45 +11,21 @@ import { Button } from '../../components/ui';
 export default function SuccessScreen() {
   const { email, linkedinConnected, completeOnboarding } = useOnboardingStore();
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const scaleAnim = useRef(new Animated.Value(0.8)).current;
-  const checkAnim = useRef(new Animated.Value(0)).current;
   const contentFadeAnim = useRef(new Animated.Value(0)).current;
   const buttonFadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 400,
-      useNativeDriver: true,
-    }).start();
-
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      friction: 5,
-      tension: 80,
-      useNativeDriver: true,
-      delay: 200,
-    }).start();
-
-    Animated.timing(checkAnim, {
-      toValue: 1,
-      duration: 400,
-      delay: 500,
-      useNativeDriver: true,
-    }).start();
-
     Animated.timing(contentFadeAnim, {
       toValue: 1,
       duration: 500,
-      delay: 700,
+      delay: 400,
       useNativeDriver: true,
     }).start();
 
     Animated.timing(buttonFadeAnim, {
       toValue: 1,
       duration: 500,
-      delay: 1000,
+      delay: 800,
       useNativeDriver: true,
     }).start();
   }, []);
@@ -67,33 +39,24 @@ export default function SuccessScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <View style={styles.container}>
 
-        {/* Main Content */}
-        <View style={styles.content}>
-
-          {/* Checkmark Circle */}
-          <Animated.View
-            style={[styles.checkCircleWrapper, { transform: [{ scale: scaleAnim }] }]}
-          >
-            <View style={styles.checkCircleOuter}>
-              <View style={styles.checkCircleInner}>
-                <Animated.Text style={[styles.checkmark, { opacity: checkAnim }]}>
-                  ✓
-                </Animated.Text>
-              </View>
-            </View>
-          </Animated.View>
-
-          {/* Text Content */}
-          <Animated.View style={[styles.textContent, { opacity: contentFadeAnim }]}>
-            <Text style={styles.title}>Congratulations!</Text>
-            <Text style={styles.subtitle}>
-              Your profile is ready. Let's find your next opportunity!
-            </Text>
-          </Animated.View>
-
+        {/* GIF */}
+        <View style={styles.gifWrapper}>
+          <Image
+            source={require('../../../assets/successLoadingAnimation.gif')}
+            style={styles.gif}
+            contentFit="contain"
+          />
         </View>
+
+        {/* Text Content */}
+        <Animated.View style={[styles.textContent, { opacity: contentFadeAnim }]}>
+          <Text style={styles.title}>Congratulations!</Text>
+          <Text style={styles.subtitle}>
+            Your profile is ready. Let's find your next opportunity!
+          </Text>
+        </Animated.View>
 
         {/* CTA Button */}
         <Animated.View style={[styles.buttonWrapper, { opacity: buttonFadeAnim }]}>
@@ -104,7 +67,7 @@ export default function SuccessScreen() {
           />
         </Animated.View>
 
-      </Animated.View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -118,37 +81,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: spacing.xl,
-  },
-  content: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.xxl,
   },
-  checkCircleWrapper: {
+  gifWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  checkCircleOuter: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: colors.primaryLight,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkCircleInner: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkmark: {
-    fontSize: 36,
-    color: colors.white,
-    fontWeight: typography.fontWeight.bold,
+  gif: {
+    width: 260,
+    height: 260,
   },
   textContent: {
     alignItems: 'center',
@@ -168,6 +111,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   buttonWrapper: {
+    width: '100%',
     paddingBottom: spacing.xl,
   },
   button: {
