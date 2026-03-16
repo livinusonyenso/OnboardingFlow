@@ -14,6 +14,7 @@ import { z } from 'zod';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useOnboardingStore } from '../../store';
 
 import { colors, typography, spacing } from '../../theme';
@@ -90,7 +91,8 @@ export default function StepOneScreen() {
               name="email"
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
-                  placeholder="johndoe"
+                  label="Enter your email"
+                  placeholder="johndoe@example.com"
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -98,6 +100,7 @@ export default function StepOneScreen() {
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
+                  leftIcon={<Ionicons name="mail-outline" size={18} color={colors.grey500} />}
                 />
               )}
             />
