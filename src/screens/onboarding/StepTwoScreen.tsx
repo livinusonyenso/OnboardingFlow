@@ -12,9 +12,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useOnboardingStore } from '../../store';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { colors, typography, spacing } from '../../theme';
 import { Button, Input, StepIndicator } from '../../components/ui';
@@ -93,15 +93,14 @@ export default function StepTwoScreen() {
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Speed up your{'\n'}application</Text>
+            <Text style={styles.title}>Speed up your application</Text>
           </View>
 
           {/* Info Banner */}
           <View style={styles.infoBanner}>
-            <View style={styles.infoDot} />
+            <Ionicons name="information-circle" size={18} color={colors.primary} />
             <Text style={styles.infoText}>
-              Connecting LinkedIn auto-fills your profile data, saving you time.
-              We only access your public information.
+              Connecting LinkedIn auto-fills your profile data, saving you time. We only access your public information.
             </Text>
           </View>
 
@@ -191,19 +190,12 @@ const styles = StyleSheet.create({
   },
   infoBanner: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     backgroundColor: colors.primaryLight,
     borderRadius: 12,
     padding: spacing.lg,
     marginBottom: spacing.xl,
     gap: spacing.sm,
-  },
-  infoDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.primary,
-    marginTop: 4,
   },
   infoText: {
     flex: 1,

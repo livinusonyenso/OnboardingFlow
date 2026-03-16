@@ -20,7 +20,7 @@ export default function StepIndicator({
 
         return (
           <React.Fragment key={step}>
-            {/* Step: circle + label stacked */}
+            {/* Step: circle above, label below */}
             <View style={styles.stepWrapper}>
               <View
                 style={[
@@ -48,14 +48,16 @@ export default function StepIndicator({
               </Text>
             </View>
 
-            {/* Connector Line between steps */}
+            {/* Connector line between steps, sits at circle level */}
             {step < totalSteps && (
-              <View
-                style={[
-                  styles.line,
-                  isCompleted && styles.lineCompleted,
-                ]}
-              />
+              <View style={styles.lineWrapper}>
+                <View
+                  style={[
+                    styles.line,
+                    isCompleted && styles.lineCompleted,
+                  ]}
+                />
+              </View>
             )}
           </React.Fragment>
         );
@@ -67,7 +69,7 @@ export default function StepIndicator({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     paddingVertical: spacing.lg,
   },
@@ -75,6 +77,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     gap: 4,
+  },
+  lineWrapper: {
+    // Push line down to vertically center it with the circle (circle height = 28, label ~16)
+    paddingTop: 14,
+    alignSelf: 'flex-start',
   },
   circle: {
     width: 28,
@@ -115,7 +122,6 @@ const styles = StyleSheet.create({
     height: 1.5,
     backgroundColor: colors.grey300,
     marginHorizontal: spacing.xs,
-    marginBottom: 20,
   },
   lineCompleted: {
     backgroundColor: colors.primary,
