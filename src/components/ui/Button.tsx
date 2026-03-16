@@ -4,7 +4,10 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
+  StyleProp,
   ViewStyle,
+  TextStyle,
+  View,
 } from 'react-native';
 import { colors, typography, spacing } from '../../theme';
 
@@ -16,7 +19,9 @@ interface ButtonProps {
   variant?: ButtonVariant;
   loading?: boolean;
   disabled?: boolean;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  leftIcon?: React.ReactNode;
 }
 
 export default function Button({
@@ -26,6 +31,8 @@ export default function Button({
   loading = false,
   disabled = false,
   style,
+  labelStyle,
+  leftIcon,
 }: ButtonProps) {
   return (
     <TouchableOpacity
@@ -46,15 +53,19 @@ export default function Button({
           color={variant === 'primary' ? colors.white : colors.primary}
         />
       ) : (
-        <Text
-          style={[
-            styles.label,
-            variant === 'outline' && styles.labelOutline,
-            variant === 'ghost' && styles.labelGhost,
-          ]}
-        >
-          {label}
-        </Text>
+        <View style={styles.content}>
+          {leftIcon}
+          <Text
+            style={[
+              styles.label,
+              variant === 'outline' && styles.labelOutline,
+              variant === 'ghost' && styles.labelGhost,
+              labelStyle,
+            ]}
+          >
+            {label}
+          </Text>
+        </View>
       )}
     </TouchableOpacity>
   );
@@ -92,5 +103,10 @@ const styles = StyleSheet.create({
   },
   labelGhost: {
     color: colors.primary,
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 });
