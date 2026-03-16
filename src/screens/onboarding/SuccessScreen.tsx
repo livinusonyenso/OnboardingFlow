@@ -5,25 +5,16 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useOnboardingStore } from '../../store';
 
 import { colors, typography, spacing } from '../../theme';
-import { Button, StepIndicator } from '../../components/ui';
-import { OnboardingStackParamList } from '../../types/navigation';
-
-// ─── Navigation Type ─────────────────────────────────────────────────────────
-type NavigationProp = NativeStackNavigationProp<
-  OnboardingStackParamList,
-  'Success'
->;
+import { Button } from '../../components/ui';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function SuccessScreen() {
-  const navigation = useNavigation<NavigationProp>();
+  const { email, completeOnboarding } = useOnboardingStore();
 
-  // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const checkAnim = useRef(new Animated.Value(0)).current;
@@ -31,14 +22,12 @@ export default function SuccessScreen() {
   const buttonFadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // 1. Fade in screen
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 400,
       useNativeDriver: true,
     }).start();
 
-    // 2. Pop in checkmark circle
     Animated.spring(scaleAnim, {
       toValue: 1,
       friction: 5,
@@ -47,7 +36,6 @@ export default function SuccessScreen() {
       delay: 200,
     }).start();
 
-    // 3. Draw checkmark
     Animated.timing(checkAnim, {
       toValue: 1,
       duration: 400,
@@ -55,7 +43,6 @@ export default function SuccessScreen() {
       useNativeDriver: true,
     }).start();
 
-    // 4. Fade in text content
     Animated.timing(contentFadeAnim, {
       toValue: 1,
       duration: 500,
@@ -63,7 +50,6 @@ export default function SuccessScreen() {
       useNativeDriver: true,
     }).start();
 
-    // 5. Fade in button
     Animated.timing(buttonFadeAnim, {
       toValue: 1,
       duration: 500,
@@ -73,30 +59,25 @@ export default function SuccessScreen() {
   }, []);
 
   const handleSeeJobs = () => {
-    // In real app: navigate to main app stack
-    console.log('Navigate to jobs screen');
+    completeOnboarding();
+    console.log('Onboarding complete! User email:', email);
+    // In real app: navigation.replace('MainStack')
   };
 
   return (
     <SafeAreaView style={styles.safe}>
       <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
 
-
         {/* Main Content */}
         <View style={styles.content}>
 
           {/* Checkmark Circle */}
           <Animated.View
-            style={[
-              styles.checkCircleWrapper,
-              { transform: [{ scale: scaleAnim }] },
-            ]}
+            style={[styles.checkCircleWrapper, { transform: [{ scale: scaleAnim }] }]}
           >
             <View style={styles.checkCircleOuter}>
               <View style={styles.checkCircleInner}>
-                <Animated.Text
-                  style={[styles.checkmark, { opacity: checkAnim }]}
-                >
+                <Animated.Text style={[styles.checkmark, { opacity: checkAnim }]}>
                   ✓
                 </Animated.Text>
               </View>
@@ -104,22 +85,17 @@ export default function SuccessScreen() {
           </Animated.View>
 
           {/* Text Content */}
-          <Animated.View
-            style={[styles.textContent, { opacity: contentFadeAnim }]}
-          >
+          <Animated.View style={[styles.textContent, { opacity: contentFadeAnim }]}>
             <Text style={styles.title}>Congratulations!</Text>
             <Text style={styles.subtitle}>
               Your profile is ready. Let's find your next opportunity!
             </Text>
           </Animated.View>
 
-         
         </View>
 
         {/* CTA Button */}
-        <Animated.View
-          style={[styles.buttonWrapper, { opacity: buttonFadeAnim }]}
-        >
+        <Animated.View style={[styles.buttonWrapper, { opacity: buttonFadeAnim }]}>
           <Button
             label="See jobs matched to you"
             onPress={handleSeeJobs}
@@ -189,29 +165,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: typography.fontSize.md * 1.6,
     paddingHorizontal: spacing.lg,
-  },
-  featuresList: {
-    width: '100%',
-    backgroundColor: colors.grey100,
-    borderRadius: 16,
-    padding: spacing.xl,
-    gap: spacing.md,
-  },
-  featureItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-  },
-  featureDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.primary,
-  },
-  featureText: {
-    fontSize: typography.fontSize.sm,
-    color: colors.textPrimary,
-    fontWeight: typography.fontWeight.medium,
   },
   buttonWrapper: {
     paddingBottom: spacing.xl,

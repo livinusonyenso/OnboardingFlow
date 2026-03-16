@@ -14,6 +14,7 @@ import { z } from 'zod';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useOnboardingStore } from '../../store';
 
 import { colors, typography, spacing } from '../../theme';
 import { Button, Input, StepIndicator } from '../../components/ui';
@@ -21,10 +22,7 @@ import { OnboardingStackParamList } from '../../types/navigation';
 
 // ─── Validation Schema ───────────────────────────────────────────────────────
 const schema = z.object({
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .email('Please enter a valid email'),
+  email: z.email('Please enter a valid email'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -38,6 +36,7 @@ type NavigationProp = NativeStackNavigationProp<OnboardingStackParamList, 'StepO
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function StepOneScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { setEmail, setCurrentStep } = useOnboardingStore();
 
   const {
     control,
@@ -52,7 +51,6 @@ export default function StepOneScreen() {
 
   const emailValue = watch('email');
 
-  // Auto-complete email with domain shortcut
   const handleDomainPress = (domain: string) => {
     const base = emailValue.includes('@')
       ? emailValue.split('@')[0]
@@ -61,7 +59,8 @@ export default function StepOneScreen() {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log('Step 1 data:', data);
+    setEmail(data.email);
+    setCurrentStep(2);
     navigation.navigate('StepTwo');
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,18 +6,19 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-} from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+} from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useOnboardingStore } from '../../store';
 
-import { colors, typography, spacing } from "../../theme";
-import { Button, Input, StepIndicator } from "../../components/ui";
-import { OnboardingStackParamList } from "../../types/navigation";
+import { colors, typography, spacing } from '../../theme';
+import { Button, Input, StepIndicator } from '../../components/ui';
+import { OnboardingStackParamList } from '../../types/navigation';
 
 // ─── Validation Schema ───────────────────────────────────────────────────────
 const schema = z.object({
@@ -27,9 +28,9 @@ const schema = z.object({
     .refine(
       (val) =>
         !val ||
-        val === "" ||
+        val === '' ||
         /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/.test(val),
-      { message: "Please enter a valid LinkedIn profile URL" },
+      { message: 'Please enter a valid LinkedIn profile URL' }
     ),
 });
 
@@ -38,13 +39,14 @@ type FormData = z.infer<typeof schema>;
 // ─── Navigation Type ─────────────────────────────────────────────────────────
 type NavigationProp = NativeStackNavigationProp<
   OnboardingStackParamList,
-  "StepTwo"
+  'StepTwo'
 >;
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function StepTwoScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [connectingLinkedIn, setConnectingLinkedIn] = useState(false);
+  const { setLinkedinUrl, setLinkedinConnected, setCurrentStep } = useOnboardingStore();
 
   const {
     control,
@@ -52,31 +54,34 @@ export default function StepTwoScreen() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { linkedinUrl: "" },
+    defaultValues: { linkedinUrl: '' },
   });
 
-  // Simulate LinkedIn OAuth connect
   const handleLinkedInConnect = async () => {
     setConnectingLinkedIn(true);
     try {
-      // In real app: trigger OAuth flow here
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      navigation.navigate("Progress");
+      setLinkedinConnected(true);
+      setCurrentStep(3);
+      navigation.navigate('Progress');
     } finally {
       setConnectingLinkedIn(false);
     }
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Step 2 data:", data);
-    navigation.navigate("Progress");
+    if (data.linkedinUrl) {
+      setLinkedinUrl(data.linkedinUrl);
+    }
+    setCurrentStep(3);
+    navigation.navigate('Progress');
   };
 
   return (
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView
           contentContainerStyle={styles.scroll}
@@ -88,7 +93,7 @@ export default function StepTwoScreen() {
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>{"Speed up your application"}</Text>
+            <Text style={styles.title}>Speed up your{'\n'}application</Text>
           </View>
 
           {/* Info Banner */}
@@ -133,11 +138,7 @@ export default function StepTwoScreen() {
                 autoCorrect={false}
                 keyboardType="url"
                 leftIcon={
-                  <Ionicons
-                    name="person-outline"
-                    size={18}
-                    color={colors.grey500}
-                  />
+                  <Ionicons name="person-outline" size={18} color={colors.grey500} />
                 }
               />
             )}
@@ -189,8 +190,8 @@ const styles = StyleSheet.create({
     lineHeight: typography.fontSize.xxxl * 1.3,
   },
   infoBanner: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     backgroundColor: colors.primaryLight,
     borderRadius: 12,
     padding: spacing.lg,
@@ -212,21 +213,21 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.medium,
   },
   linkedinButton: {
-    width: "100%",
+    width: '100%',
     marginBottom: spacing.xl,
   },
   linkedinButtonOutline: {
-    borderColor: "#0A66C2",
+    borderColor: '#0A66C2',
   },
   linkedinButtonLabel: {
-    color: "#0A66C2",
+    color: '#0A66C2',
   },
   continueButton: {
-    backgroundColor: "#0A66C2",
+    backgroundColor: '#0A66C2',
   },
   divider: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: spacing.xl,
     gap: spacing.sm,
   },
@@ -245,13 +246,13 @@ const styles = StyleSheet.create({
     minHeight: spacing.xxxl,
   },
   button: {
-    width: "100%",
+    width: '100%',
     marginBottom: spacing.lg,
   },
   legalText: {
     fontSize: typography.fontSize.xs,
     color: colors.textSecondary,
-    textAlign: "center",
+    textAlign: 'center',
     lineHeight: typography.fontSize.xs * 1.8,
   },
 });
