@@ -13,7 +13,7 @@ import { Button } from '../../components/ui';
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function SuccessScreen() {
-  const { email, completeOnboarding } = useOnboardingStore();
+  const { email, linkedinConnected, completeOnboarding } = useOnboardingStore();
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
@@ -60,7 +60,8 @@ export default function SuccessScreen() {
 
   const handleSeeJobs = () => {
     completeOnboarding();
-    console.log('Onboarding complete! User email:', email);
+    // Temporary — remove after testing
+    console.log('Store state:', { email, linkedinConnected });
     // In real app: navigation.replace('MainStack')
   };
 

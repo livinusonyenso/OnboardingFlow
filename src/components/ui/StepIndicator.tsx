@@ -19,36 +19,36 @@ export default function StepIndicator({
         const isActive = step === currentStep;
 
         return (
-          <View key={step} style={styles.stepWrapper}>
-            {/* Circle */}
-            <View
-              style={[
-                styles.circle,
-                isCompleted && styles.circleCompleted,
-                isActive && styles.circleActive,
-              ]}
-            >
-              <Text
+          <React.Fragment key={step}>
+            {/* Step: circle + label stacked */}
+            <View style={styles.stepWrapper}>
+              <View
                 style={[
-                  styles.stepNumber,
-                  (isActive || isCompleted) && styles.stepNumberActive,
+                  styles.circle,
+                  isCompleted && styles.circleCompleted,
+                  isActive && styles.circleActive,
                 ]}
               >
-                {step}
+                <Text
+                  style={[
+                    styles.stepNumber,
+                    (isActive || isCompleted) && styles.stepNumberActive,
+                  ]}
+                >
+                  {step}
+                </Text>
+              </View>
+              <Text
+                style={[
+                  styles.stepLabel,
+                  (isActive || isCompleted) && styles.stepLabelActive,
+                ]}
+              >
+                Step {step}
               </Text>
             </View>
 
-            {/* Label */}
-            <Text
-              style={[
-                styles.stepLabel,
-                (isActive || isCompleted) && styles.stepLabelActive,
-              ]}
-            >
-              Step {step}
-            </Text>
-
-            {/* Connector Line */}
+            {/* Connector Line between steps */}
             {step < totalSteps && (
               <View
                 style={[
@@ -57,7 +57,7 @@ export default function StepIndicator({
                 ]}
               />
             )}
-          </View>
+          </React.Fragment>
         );
       })}
     </View>
@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   },
   stepWrapper: {
     alignItems: 'center',
-    flexDirection: 'row',
-    gap: 6,
+    flexDirection: 'column',
+    gap: 4,
   },
   circle: {
     width: 28,
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     height: 1.5,
     backgroundColor: colors.grey300,
     marginHorizontal: spacing.xs,
+    marginBottom: 20,
   },
   lineCompleted: {
     backgroundColor: colors.primary,
