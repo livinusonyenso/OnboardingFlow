@@ -100,7 +100,7 @@ export default function StepTwoScreen() {
           <View style={styles.infoBanner}>
             <Ionicons name="information-circle" size={18} color={colors.primary} />
             <Text style={styles.infoText}>
-              Connecting LinkedIn auto-fills your profile data, saving you time. We only access your public information.
+              Connecting LinkedIn auto-fills your{`\n`} profile data, saving you time. We only {`\n`} access your public information.
             </Text>
           </View>
 

@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.xl,
   },
   stepWrapper: {
     alignItems: 'center',
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   lineWrapper: {
-    // Push line down to vertically center it with the circle (circle height = 28, label ~16)
+    flex: 1,
     paddingTop: 14,
     alignSelf: 'flex-start',
   },
@@ -118,10 +119,9 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.medium,
   },
   line: {
-    width: 32,
+    width: 140,
     height: 1.5,
     backgroundColor: colors.grey300,
-    marginHorizontal: spacing.xs,
   },
   lineCompleted: {
     backgroundColor: colors.primary,
