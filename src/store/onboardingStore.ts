@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// --- Types ---
 interface OnboardingState {
   // Step 1 Data
   email: string;
@@ -22,7 +22,7 @@ interface OnboardingState {
   resetOnboarding: () => void;
 }
 
-// ─── Initial State ────────────────────────────────────────────────────────────
+// --- Initial State ---
 const initialState = {
   email: '',
   linkedinUrl: '',
@@ -31,7 +31,7 @@ const initialState = {
   isComplete: false,
 };
 
-// ─── Store ────────────────────────────────────────────────────────────────────
+// --- Store ---
 export const useOnboardingStore = create<OnboardingState>((set) => ({
   ...initialState,
 

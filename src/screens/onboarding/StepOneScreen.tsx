@@ -21,20 +21,20 @@ import { colors, typography, spacing } from '../../theme';
 import { Button, Input, StepIndicator } from '../../components/ui';
 import { OnboardingStackParamList } from '../../types/navigation';
 
-// ─── Validation Schema ───────────────────────────────────────────────────────
+// --- Validation Schema ---
 const schema = z.object({
   email: z.email('Please enter a valid email'),
 });
 
 type FormData = z.infer<typeof schema>;
 
-// ─── Email Shortcuts ─────────────────────────────────────────────────────────
+// --- Email Shortcuts ---
 const EMAIL_DOMAINS = ['@gmail.com', '@yahoo.com', '@hotmail.com', '@outlook.com'];
 
-// ─── Navigation Type ─────────────────────────────────────────────────────────
+// --- Navigation Type ---
 type NavigationProp = NativeStackNavigationProp<OnboardingStackParamList, 'StepOne'>;
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// --- Component ---
 export default function StepOneScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { setEmail, setCurrentStep } = useOnboardingStore();
@@ -92,7 +92,7 @@ export default function StepOneScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Enter your email"
-                  placeholder="johndoe@example.com"
+                  placeholder="johndoe"
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -140,7 +140,7 @@ export default function StepOneScreen() {
   );
 }
 
-// ─── Styles ──────────────────────────────────────────────────────────────────
+// --- Styles ---
 const styles = StyleSheet.create({
   safe: {
     flex: 1,

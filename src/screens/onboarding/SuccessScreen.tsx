@@ -7,7 +7,7 @@ import { useOnboardingStore } from '../../store';
 import { colors, typography, spacing } from '../../theme';
 import { Button } from '../../components/ui';
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// --- Component ---
 export default function SuccessScreen() {
   const { email, linkedinConnected, completeOnboarding } = useOnboardingStore();
 
@@ -32,7 +32,7 @@ export default function SuccessScreen() {
 
   const handleSeeJobs = () => {
     completeOnboarding();
-    // Temporary — remove after testing
+    // Temporary - remove after testing
     console.log('Store state:', { email, linkedinConnected });
     // In real app: navigation.replace('MainStack')
   };
@@ -72,7 +72,7 @@ export default function SuccessScreen() {
   );
 }
 
-// ─── Styles ──────────────────────────────────────────────────────────────────
+// --- Styles ---
 const styles = StyleSheet.create({
   safe: {
     flex: 1,

@@ -20,7 +20,7 @@ import { colors, typography, spacing } from '../../theme';
 import { Button, Input, StepIndicator } from '../../components/ui';
 import { OnboardingStackParamList } from '../../types/navigation';
 
-// ─── Validation Schema ───────────────────────────────────────────────────────
+// --- Validation Schema ---
 const schema = z.object({
   linkedinUrl: z
     .string()
@@ -36,13 +36,13 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-// ─── Navigation Type ─────────────────────────────────────────────────────────
+// --- Navigation Type ---
 type NavigationProp = NativeStackNavigationProp<
   OnboardingStackParamList,
   'StepTwo'
 >;
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// --- Component ---
 export default function StepTwoScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [connectingLinkedIn, setConnectingLinkedIn] = useState(false);
@@ -100,7 +100,7 @@ export default function StepTwoScreen() {
           <View style={styles.infoBanner}>
             <Ionicons name="information-circle" size={18} color={colors.primary} />
             <Text style={styles.infoText}>
-              Connecting LinkedIn auto-fills your{`\n`} profile data, saving you time. We only {`\n`} access your public information.
+              Connecting LinkedIn auto-fills your profile data, saving you time. We only access your public information.
             </Text>
           </View>
 
@@ -155,8 +155,7 @@ export default function StepTwoScreen() {
 
           {/* Legal Note */}
           <Text style={styles.legalText}>
-            We work directly with LinkedIn best practices. Your account {"\n"} will not
-            be restricted because of us.
+            We work directly with LinkedIn best practices. Your account will not be restricted because of us.
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -164,7 +163,7 @@ export default function StepTwoScreen() {
   );
 }
 
-// ─── Styles ──────────────────────────────────────────────────────────────────
+// --- Styles ---
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
