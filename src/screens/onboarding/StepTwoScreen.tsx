@@ -169,7 +169,7 @@ export default function StepTwoScreen() {
 
           {/* Legal Note */}
           <Text style={styles.legalText}>
-             {"We work directly with LinkedIn best practices. Your account will\nnot be restricted because of us."}
+            We work directly with LinkedIn best practices. Your account will not be restricted because of us.
 
           </Text>
         </ScrollView>
