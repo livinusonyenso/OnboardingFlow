@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.yourname.onboardingflow"
+      "bundleIdentifier": "com.livinus.onboardingflow"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +23,7 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.yourname.onboardingflow"
+      "package": "com.livinus.onboardingflow"
     },
     "web": {
       "favicon": "./assets/favicon.png"
