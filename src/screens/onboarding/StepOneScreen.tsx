@@ -23,7 +23,7 @@ import { OnboardingStackParamList } from '../../types/navigation';
 
 // --- Validation Schema ---
 const schema = z.object({
-  email: z.email('Please enter a valid email'),
+  email: z.email({ message: 'Please enter a valid email' }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -81,7 +81,7 @@ export default function StepOneScreen() {
 
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Let's get started</Text>
+            <Text style={styles.title}>{"Let's get started"}</Text>
           </View>
 
           {/* Form */}
@@ -100,7 +100,13 @@ export default function StepOneScreen() {
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  leftIcon={<Ionicons name="mail" size={18} color={colors.grey500} />}
+                  leftIcon={
+                    <Ionicons
+                      name="mail"
+                      size={16}
+                      color={colors.grey500}
+                    />
+                  }
                 />
               )}
             />
@@ -109,7 +115,6 @@ export default function StepOneScreen() {
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              style={styles.domainsScroll}
               contentContainerStyle={styles.domainsContainer}
             >
               {EMAIL_DOMAINS.map((domain) => (
@@ -144,7 +149,7 @@ export default function StepOneScreen() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.white,
   },
   flex: {
     flex: 1,
@@ -152,39 +157,38 @@ const styles = StyleSheet.create({
   scroll: {
     flexGrow: 1,
     paddingHorizontal: spacing.xl,
-    paddingBottom: spacing.xl,
+    paddingBottom: spacing.xxl,
   },
   header: {
-    marginTop: spacing.xl,
+    marginTop: spacing.xxl,
     marginBottom: spacing.xxl,
   },
   title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
+    fontSize: 28,
+    fontWeight: '700',
     color: colors.textPrimary,
+    letterSpacing: -0.3,
   },
   form: {
-    gap: spacing.sm,
-  },
-  domainsScroll: {
-    marginTop: spacing.sm,
+    gap: spacing.xs,
   },
   domainsContainer: {
     gap: spacing.sm,
     paddingVertical: spacing.xs,
+    paddingHorizontal: 1,
   },
   domainChip: {
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
+    paddingVertical: 7,
     borderRadius: 20,
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.white,
   },
   domainText: {
     fontSize: typography.fontSize.sm,
     color: colors.textSecondary,
-    fontWeight: typography.fontWeight.medium,
+    fontWeight: '400',
   },
   spacer: {
     flex: 1,
@@ -192,5 +196,6 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
+    marginBottom: spacing.sm,
   },
 });
