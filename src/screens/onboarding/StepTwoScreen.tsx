@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   infoBanner: {
   flexDirection: 'row',
-  alignItems: 'flex-start',       // icon aligns to top
+  alignItems: 'center',
   backgroundColor: colors.primaryLight,
   borderRadius: 12,
   borderWidth: 1,
@@ -213,9 +213,7 @@ const styles = StyleSheet.create({
   marginBottom: spacing.xl,
   gap: spacing.sm,
 },
-infoIcon: {
-  marginTop: 1,                   // slight nudge to align with first text line
-},
+infoIcon: {},
 infoText: {
   flex: 1,
   fontSize: typography.fontSize.sm,
