@@ -32,8 +32,6 @@ export default function SuccessScreen() {
 
   const handleSeeJobs = () => {
     completeOnboarding();
-    // Temporary - remove after testing
-    console.log('Store state:', { email, linkedinConnected });
     // In real app: navigation.replace('MainStack')
   };
 
